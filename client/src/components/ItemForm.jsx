@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import axios from 'axios';
 
+const BASE_URL = 'https://newonlineauctionproject-backend.onrender.com';
+
 export default function ItemForm() {
   const [form, setForm] = useState({
     title: '',
     description: '',
-    startingBid: 0,
+    startingBid: '',
     endTime: '',
   });
 
@@ -16,17 +18,25 @@ export default function ItemForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('https://newonlineauctionproject-backened.onrender.com', form);
+      await axios.post(`${BASE_URL}/api/items`, form);
       alert('✅ Item listed successfully!');
-      setForm({ title: '', description: '', startingBid: 0, endTime: '' });
+      setForm({
+        title: '',
+        description: '',
+        startingBid: '',
+        endTime: '',
+      });
     } catch (err) {
-      alert('❌ Failed to list item: ' + err.message);
+      const errorMessage =
+        err.response?.data?.message || err.response?.data || err.message;
+      alert('❌ Failed to list item: ' + errorMessage);
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="form">
       <h2>📝 List a New Auction Item</h2>
+
       <input
         name="title"
         placeholder="Item Title"
@@ -34,6 +44,7 @@ export default function ItemForm() {
         onChange={handleChange}
         required
       />
+
       <textarea
         name="description"
         placeholder="Item Description"
@@ -41,6 +52,7 @@ export default function ItemForm() {
         onChange={handleChange}
         required
       />
+
       <input
         name="startingBid"
         type="number"
@@ -48,7 +60,9 @@ export default function ItemForm() {
         value={form.startingBid}
         onChange={handleChange}
         required
+        min="1"
       />
+
       <input
         name="endTime"
         type="datetime-local"
@@ -56,6 +70,7 @@ export default function ItemForm() {
         onChange={handleChange}
         required
       />
+
       <button type="submit">Post Auction</button>
     </form>
   );
