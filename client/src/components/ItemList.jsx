@@ -3,12 +3,14 @@ import axios from 'axios';
 import BidForm from './BidForm';
 import moment from 'moment';
 
+const BACKEND_URL = 'https://newonlineauctionproject-backend.onrender.com';
+
 export default function ItemList() {
   const [items, setItems] = useState([]);
 
   const fetchItems = async () => {
     try {
-      const res = await axios.get('https://newonlineauctionproject-backened.onrender.com/api/items');
+      const res = await axios.get(`${BACKEND_URL}/api/items`);
       setItems(res.data);
     } catch (err) {
       console.error('❌ Error fetching items:', err);
@@ -18,7 +20,7 @@ export default function ItemList() {
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this item?')) return;
     try {
-      await axios.delete(`http://localhost:5000/api/items/${id}`);
+      await axios.delete(`${BACKEND_URL}/api/items/${id}`);
       fetchItems(); // Refresh list after deletion
     } catch (err) {
       alert('❌ Failed to delete item');
