@@ -8,7 +8,7 @@ export default function BidForm({ itemId, onBidPlaced }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`http://localhost:5000/api/items/bid/${itemId}`, {
+      await axios.post(`https://newonlineauctionproject-backened.onrender.com/api/items/bid/${itemId}`, {
         amount,
         user,
       });
