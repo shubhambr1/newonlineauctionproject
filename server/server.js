@@ -7,7 +7,12 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors());
+
+// ✅ Allow only the deployed frontend to access the backend
+app.use(cors({
+  origin: 'https://newonlineauctionproject-frontend.onrender.com',
+  credentials: true
+}));
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, {
