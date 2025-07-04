@@ -16,7 +16,7 @@ export default function ItemForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/items', form);
+      await axios.post('https://newonlineauctionproject-backened.onrender.com', form);
       alert('✅ Item listed successfully!');
       setForm({ title: '', description: '', startingBid: 0, endTime: '' });
     } catch (err) {
