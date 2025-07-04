@@ -8,7 +8,7 @@ export default function ItemList() {
 
   const fetchItems = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/items');
+      const res = await axios.get('https://newonlineauctionproject-backened.onrender.com/api/items');
       setItems(res.data);
     } catch (err) {
       console.error('❌ Error fetching items:', err);
